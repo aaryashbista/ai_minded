@@ -11,11 +11,13 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "super_secret_key_here")
 # Replace "client_secret.json" with your actual credentials file.
 # On Vercel, use an environment variable for this (recommended).
 blueprint = make_google_blueprint(
-    client_secrets_file="client_secret.json",  # or handle via env var
-    redirect_url="http://localhost:5000/callback",
-
+    client_id="317446834081-l3rh4cuhu59rg3mj6bvfghf5op7dd4fg.apps.googleusercontent.com",
+    client_secret="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",
     scope=["profile", "email"],
+    redirect_to="google_login"
 )
+
+
 app.register_blueprint(blueprint, url_prefix="/login")
 
 # ✅ Allowed Google account (change this to your real Gmail)
