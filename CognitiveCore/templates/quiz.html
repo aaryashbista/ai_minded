@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ quiz_title or "Your Quiz" }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+    <style>
+        body { background: #f9f9f9; padding: 30px; font-family: Arial, sans-serif; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h3 { color: #333; }
+        .question { margin-bottom: 25px; text-align: left; }
+        .options label { display: block; margin-bottom: 5px; }
+        .submit-btn { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ quiz_title or "Quiz Time!" }}</h1>
+        <p><strong>Topic:</strong> {{ topic }} | <strong>Difficulty:</strong> {{ difficulty }}</p>
+        
+        <form method="POST" action="{{ url_for('submit_quiz') }}">
+            {% for question in questions %}
+                <div class="question">
+                    <h3>Q{{ loop.index }}. {{ question.text }}</h3>
+                    <div class="options">
+                        {% for option in question.options %}
+                            <label>
+                                <input type="radio" name="q{{ loop.index0 }}" value="{{ option }}" required>
+                                {{ option }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <input type="hidden" name="total_questions" value="{{ questions|length }}">
+            <button type="submit" class="button-primary submit-btn">Submit Quiz</button>
+        </form>
+    </div>
+</body>
+</html>
